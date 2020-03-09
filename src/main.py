@@ -12,6 +12,7 @@ def main():
 
     pygame.init()
     screen = pygame.display.set_mode((width, height))
+    pygame.display.set_caption("RockClicker")
     running = True
     gemCount = 0
 
@@ -27,16 +28,16 @@ def main():
         screen.fill(black)
 
         drawRock()
-        drawGemCount(screen)
+        drawGemCount()
         pygame.display.update()
 
 def drawRock():
     pygame.draw.circle(screen, white, centerOfScreen, radius)
 
-def drawGemCount(screen):
-    font = pygame.font.SysFont('Comic Sans MS', 30)
-    text = font.render(str(gemCount), True, white, None)
-    screen.blit(text, (0, 550))
+def drawGemCount():
+    font = pygame.font.SysFont('Arial', 30)
+    text = font.render("Gems: " + str(gemCount), True, white, None)
+    screen.blit(text, (10, 550))
 
 if __name__ == '__main__':
     main()
