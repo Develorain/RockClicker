@@ -3,6 +3,7 @@ import constants
 
 from rock import Rock
 from button import Button
+from text import Text
 
 def main():
     global running, screen, rock
@@ -14,6 +15,7 @@ def main():
 
     rock = Rock(constants.CENTER_SCREEN_X, constants.CENTER_SCREEN_Y, 100, 100)
     shopButton = Button("Shop", 700, 550, 100, 50)
+    gemText = Text("Gems: " + rock.getGemCountAsString(), 10, 550, constants.WHITE, "Arial", 30)
 
     while running:
         for event in pygame.event.get():
@@ -25,16 +27,10 @@ def main():
                 running = False
         
         screen.fill(constants.BLACK)
-
         rock.draw(screen)
-        drawGemCount()
+        gemText.drawDynamic(screen, "Gems: " + rock.getGemCountAsString())
         shopButton.draw(screen)
         pygame.display.update()
-
-def drawGemCount():
-    font = pygame.font.SysFont('Arial', 30)
-    text = font.render("Gems: " + str(rock.getGemCount()), True, constants.WHITE, None)
-    screen.blit(text, (10, 550))
 
 if __name__ == '__main__':
     main()
