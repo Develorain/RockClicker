@@ -20,7 +20,7 @@ class Button:
         mouse = pygame.mouse.get_pos()
         
         if self.isClickInTheButton(mouse[0], mouse[1]):
-            print("Button Pressed")
+            print(self.text + " Pressed")
     
     def isClickInTheButton(self, mouseX, mouseY):
         if self.x < mouseX < self.x + self.width:

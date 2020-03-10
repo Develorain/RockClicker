@@ -17,7 +17,6 @@ class Rock:
 
         if self.isClickInTheRock(mouse[0], mouse[1]):
             self.gemCount = self.gemCount + 1
-            print("Pressed rock!")
 
     def isClickInTheRock(self, mouseX, mouseY):
         # Determines if the click is actually within the bounds of the rock
