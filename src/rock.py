@@ -1,4 +1,5 @@
 import pygame
+import constants
 
 class Rock:
     def __init__(self, x, y, width, height):
@@ -7,6 +8,9 @@ class Rock:
         self.width = width
         self.height = height
         self.gemCount = 0
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, constants.WHITE, (constants.CENTER_SCREEN_X - (self.width / 2), constants.CENTER_SCREEN_Y - (self.height / 2), self.width, self.height))
 
     def isBeingClicked(self):
         mouse = pygame.mouse.get_pos()

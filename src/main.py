@@ -27,19 +27,14 @@ def main():
         
         screen.fill(constants.BLACK)
 
-        drawRock()
+        rock.draw(screen)
         drawGemCount()
         drawShopButton()
         pygame.display.update()
 
-def drawRock():
-    pygame.draw.rect(screen, constants.WHITE, (constants.CENTER_SCREEN_X - (rockWidth / 2), constants.CENTER_SCREEN_Y - (rockHeight / 2), rockWidth, rockHeight))
-
 def drawGemCount():
-    counter = rock.getGemCount()
-
     font = pygame.font.SysFont('Arial', 30)
-    text = font.render("Gems: " + str(counter), True, constants.WHITE, None)
+    text = font.render("Gems: " + str(rock.getGemCount()), True, constants.WHITE, None)
     screen.blit(text, (10, 550))
 
 def drawShopButton():
