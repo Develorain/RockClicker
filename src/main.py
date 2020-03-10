@@ -1,4 +1,5 @@
 import pygame
+from rock import Rock
 
 # Dimensions
 screenWidth = 800
@@ -22,6 +23,8 @@ def main():
     pygame.display.set_caption("RockClicker")
     running = True
     gemCount = 0
+
+    abc = Rock(centerScreenX, centerScreenY, rockWidth, rockHeight)
 
     while running:
         for event in pygame.event.get():
