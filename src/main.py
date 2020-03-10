@@ -4,10 +4,6 @@ import constants
 from rock import Rock
 from button import Button
 
-# Dimensions
-rockWidth = 100
-rockHeight = 100
-
 def main():
     global running, screen, rock
 
@@ -23,6 +19,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 rock.isBeingClicked()
+                shopButton.isBeingClicked()
 
             if event.type == pygame.QUIT:
                 running = False
@@ -38,7 +35,6 @@ def drawGemCount():
     font = pygame.font.SysFont('Arial', 30)
     text = font.render("Gems: " + str(rock.getGemCount()), True, constants.WHITE, None)
     screen.blit(text, (10, 550))
-    #pygame.draw.rect(screen, constants.WHITE, )
 
 if __name__ == '__main__':
     main()

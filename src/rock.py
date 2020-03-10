@@ -21,7 +21,7 @@ class Rock:
     def isClickInTheRock(self, mouseX, mouseY):
         # Determines if the click is actually within the bounds of the rock
         if self.x - self.width / 2 < mouseX < self.x + self.width / 2:
-            if self.y - self.height / 2 < mouseY <  self.y + self.height / 2:
+            if self.y - self.height / 2 < mouseY < self.y + self.height / 2:
                 return True
         
         return False
