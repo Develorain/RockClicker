@@ -26,6 +26,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 rock.isBeingClicked()
                 shopButton.isBeingClicked()
+
                 if state == State.MAIN_MENU:
                     state = State.GAME_SCREEN
                 else:
@@ -33,6 +34,8 @@ def main():
 
             if event.type == pygame.QUIT:
                 running = False
+        
+        screen.fill(constants.BLACK)
         
         if state == State.MAIN_MENU:
             draw1(startButton)
