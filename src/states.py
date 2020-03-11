@@ -1,5 +1,6 @@
 from enum import Enum
 
 class State(Enum):
-    MAIN_MENU = 1
+    MAIN_SCREEN = 1
     GAME_SCREEN = 2
+    SHOP_SCREEN = 3
