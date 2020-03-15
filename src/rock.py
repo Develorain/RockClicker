@@ -7,7 +7,6 @@ class Rock:
         self.y = y
         self.width = width
         self.height = height
-        self.gemCount = 0
 
     def draw(self, screen):
         pygame.draw.rect(screen, constants.WHITE, (constants.CENTER_SCREEN_X - (self.width / 2), constants.CENTER_SCREEN_Y - (self.height / 2), self.width, self.height))
@@ -16,7 +15,9 @@ class Rock:
         mouse = pygame.mouse.get_pos()
 
         if self.isClickInTheRock(mouse[0], mouse[1]):
-            self.gemCount = self.gemCount + 1
+            return True
+        
+        return False
 
     def isClickInTheRock(self, mouseX, mouseY):
         # Determines if the click is actually within the bounds of the rock
@@ -37,9 +38,3 @@ class Rock:
     
     def getHeight(self):
         return self.height
-        
-    def getGemCount(self):
-        return self.gemCount
-
-    def getGemCountAsString(self):
-        return str(self.gemCount)
