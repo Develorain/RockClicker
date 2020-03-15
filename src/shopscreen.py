@@ -14,6 +14,7 @@ class ShopScreen():
         self.upgradeButton4 = Button("Upgrade 4", 350, 350, 100, 50)
         self.backButton = Button("Back", 700, 550, 100, 50)
 
+        # Add components to a list
         self.components = []
         self.components.append(self.upgradeButton1)
         self.components.append(self.upgradeButton2)

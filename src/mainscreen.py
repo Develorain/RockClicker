@@ -1,18 +1,15 @@
 from button import Button
+from screen import Screen
 
-class MainScreen():
+class MainScreen(Screen):
     def __init__(self, display):
-        self.display = display
+        Screen.__init__(self, display)
 
-        # All the components of the screen
+        # Create the componenets of the main screen
         self.startButton = Button("Start", 350, 275, 100, 50)
 
-        self.components = []
+        # Add components to components list
         self.components.append(self.startButton)
-
-    def draw(self):
-        for component in self.components:
-            component.draw(self.display)
     
     def checkForClicks(self, state):
         state = self.startButton.isBeingClicked(state)

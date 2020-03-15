@@ -21,7 +21,7 @@ class Button:
         
         if self.isClickInTheButton(mouse[0], mouse[1]):
             print(self.text.getText() + " Pressed")
-            
+
             if self.text.getText() == "Start":
                 state = State.GAME_SCREEN
             elif self.text.getText() == "Shop":

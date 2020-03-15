@@ -12,7 +12,8 @@ class GameScreen():
         self.rock = Rock(constants.CENTER_SCREEN_X, constants.CENTER_SCREEN_Y, 100, 100)
         self.shopButton = Button("Shop", 700, 550, 100, 50)
         self.gemText = Text("Gems: " + self.rock.getGemCountAsString(), 10, 550, constants.WHITE, "Arial", 30)
-
+        
+        # Add components to a list
         self.components = []
         self.components.append(self.rock)
         self.components.append(self.shopButton)
