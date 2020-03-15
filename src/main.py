@@ -16,6 +16,7 @@ def main():
     pygame.init()
     display = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
     pygame.display.set_caption("Rock Clicker")
+    clock = pygame.time.Clock()
 
     running = True
     state = State.MAIN_SCREEN
@@ -27,6 +28,8 @@ def main():
 
     # Game loop
     while running:
+        deltaTime = clock.tick()
+
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if state == State.MAIN_SCREEN:
@@ -45,6 +48,7 @@ def main():
         if state == State.MAIN_SCREEN:
             mainScreen.draw()
         elif state == State.GAME_SCREEN:
+            gameScreen.update(deltaTime)
             gameScreen.draw()
         elif state == State.SHOP_SCREEN:
             shopScreen.draw()
