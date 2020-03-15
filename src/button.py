@@ -24,7 +24,7 @@ class Button:
         if self.isClickInTheButton(mouse[0], mouse[1]):
             print(self.text + " Pressed")
             
-            if self.text == "Play":
+            if self.text == "Start":
                 state = State.GAME_SCREEN
             elif self.text == "Shop":
                 state = State.SHOP_SCREEN
