@@ -21,3 +21,6 @@ class Text:
         font = pygame.font.SysFont(self.font, self.fontSize)
         text = font.render(self.text, True, self.colour, None)
         screen.blit(text, (self.x, self.y))
+    
+    def getText(self):
+        return self.text
