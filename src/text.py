@@ -10,17 +10,17 @@ class Text:
         self.font = font
         self.fontSize = fontSize
 
-    # Draws text that might change while on screen
-    def drawDynamic(self, screen, text):
+    # Draws text that might change while on display
+    def drawDynamic(self, display, text):
         font = pygame.font.SysFont(self.font, self.fontSize)
         abc = font.render(text, True, self.colour, None)
-        screen.blit(abc, (self.x, self.y))
+        display.blit(abc, (self.x, self.y))
     
-    # Draws text that never changes once it is displayed on screen
-    def draw(self, screen):
+    # Draws text that never changes once it is displayed on display
+    def draw(self, display):
         font = pygame.font.SysFont(self.font, self.fontSize)
         text = font.render(self.text, True, self.colour, None)
-        screen.blit(text, (self.x, self.y))
+        display.blit(text, (self.x, self.y))
     
     def getText(self):
         return self.text

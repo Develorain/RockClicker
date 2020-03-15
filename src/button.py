@@ -12,9 +12,9 @@ class Button:
         self.width = width
         self.height = height
     
-    def draw(self, screen):
-        pygame.draw.rect(screen, constants.WHITE, (self.x, self.y, self.width, self.height))
-        self.text.draw(screen)
+    def draw(self, display):
+        pygame.draw.rect(display, constants.WHITE, (self.x, self.y, self.width, self.height))
+        self.text.draw(display)
     
     def isBeingClicked(self, state):
         mouse = pygame.mouse.get_pos()
@@ -26,6 +26,8 @@ class Button:
                 state = State.GAME_SCREEN
             elif self.text.getText() == "Shop":
                 state = State.SHOP_SCREEN
+            elif self.text.getText() == "Back":
+                state = State.GAME_SCREEN
         
         return state
     
