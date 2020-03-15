@@ -11,7 +11,7 @@ class MainScreen(Screen):
         # Add components to components list
         self.components.append(self.startButton)
     
-    def checkForClicks(self, state):
+    def checkForComponentClicks(self, state):
         state = self.startButton.isBeingClicked(state)
 
         return state

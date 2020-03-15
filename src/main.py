@@ -30,11 +30,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if state == State.MAIN_SCREEN:
-                    state = mainScreen.checkForClicks(state)
+                    state = mainScreen.checkForComponentClicks(state)
                 elif state == State.GAME_SCREEN:
-                    state = gameScreen.checkForClicks(state)
+                    state = gameScreen.checkForComponentClicks(state)
                 elif state == State.SHOP_SCREEN:
-                    state = shopScreen.checkForClicks(state)
+                    state = shopScreen.checkForComponentClicks(state)
 
             if event.type == pygame.QUIT:
                 running = False
