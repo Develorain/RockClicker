@@ -1,9 +1,7 @@
-
-
 class GemsAndUpgrades():
     INCREMENT_AMOUNT = 1
     PASSIVE_INCREMENT_AMOUNT = 1
-    PASSIVE_INCREMENT_TIMER = 1000
+    PASSIVE_INCREMENT_TIMER = 1000  # 1 second per passive tick
     
     def __init__(self):
         self.gemCount = 0

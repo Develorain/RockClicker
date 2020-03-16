@@ -4,14 +4,19 @@ from rock import Rock
 from button import Button
 from text import Text
 from screen import Screen
+from state import State
 
 class GameScreen(Screen):
     def __init__(self, display, gemsAndUpgrades):
         Screen.__init__(self, display)
 
+        # Give screen access to gems and upgrades
         self.gemsAndUpgrades = gemsAndUpgrades
 
-        # Create the componenets of the game screen
+        self.init()
+    
+    def init(self):
+        # Create the components of the game screen
         self.rock = Rock(constants.CENTER_SCREEN_X, constants.CENTER_SCREEN_Y, 100, 100)
         self.shopButton = Button("Shop", 700, 550, 100, 50)
         self.gemLabel = Text("Gem:", 10, 550, constants.WHITE, "Arial", 30)
@@ -30,9 +35,10 @@ class GameScreen(Screen):
         self.gemText.update(str(self.gemsAndUpgrades.getGemCount()))
     
     def checkForComponentClicks(self, state):
-        if self.rock.isBeingClicked():
+        if self.rock.isBeingClicked() == True:
             self.gemsAndUpgrades.incrementGems()
         
-        state = self.shopButton.isBeingClicked(state)
+        if self.shopButton.isBeingClicked(state) == True:
+            state = State.SHOP_SCREEN
 
         return state

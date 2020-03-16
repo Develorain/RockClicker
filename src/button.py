@@ -1,7 +1,7 @@
 import pygame
 import constants
 
-from states import State
+from state import State
 from text import Text
 
 class Button:
@@ -21,17 +21,7 @@ class Button:
         
         if self.isClickInTheButton(mouse[0], mouse[1]):
             print(self.text.getText() + " Pressed")
-
-            if self.text.getText() == "Start":
-                state = State.GAME_SCREEN
-            elif self.text.getText() == "Shop":
-                state = State.SHOP_SCREEN
-            elif self.text.getText() == "Back":
-                state = State.GAME_SCREEN
-            
-            if self.text.getText() == "Upgrade 1":
-                print(self.text.getText())
-                return True
+            return True
         
         return state
     

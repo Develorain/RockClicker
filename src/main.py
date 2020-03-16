@@ -4,7 +4,7 @@ import constants
 from rock import Rock
 from button import Button
 from text import Text
-from states import State
+from state import State
 from mainscreen import MainScreen
 from gamescreen import GameScreen
 from shopscreen import ShopScreen
