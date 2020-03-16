@@ -24,6 +24,8 @@ class GameScreen(Screen):
         self.components.append(self.gemText)
     
     def update(self, deltaTime):
+        self.gemsAndUpgrades.handlePassive(deltaTime)
+
         self.rock.update(deltaTime)
         self.gemText.update(str(self.gemsAndUpgrades.getGemCount()))
     

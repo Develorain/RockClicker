@@ -29,7 +29,6 @@ def main():
     gameScreen = GameScreen(display, gemsAndUpgrades)
     shopScreen = ShopScreen(display, gemsAndUpgrades)
 
-
     # Game loop
     while running:
         deltaTime = clock.tick()
@@ -55,7 +54,7 @@ def main():
             gameScreen.update(deltaTime)
             gameScreen.draw()
         elif state == State.SHOP_SCREEN:
-            shopScreen.update()
+            shopScreen.update(deltaTime)
             shopScreen.draw()
 
         pygame.display.update()

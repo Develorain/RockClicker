@@ -28,7 +28,9 @@ class ShopScreen(Screen):
         self.components.append(self.gemLabel)
         self.components.append(self.gemText)
 
-    def update(self):
+    def update(self, deltaTime):
+        self.gemsAndUpgrades.handlePassive(deltaTime)
+
         self.gemText.update(str(self.gemsAndUpgrades.getGemCount()))
     
     def checkForComponentClicks(self, state):
