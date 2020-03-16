@@ -8,6 +8,7 @@ from states import State
 from mainscreen import MainScreen
 from gamescreen import GameScreen
 from shopscreen import ShopScreen
+from gemsandupgrades import GemsAndUpgrades
 
 def main():
     global running, display, rock
@@ -21,10 +22,13 @@ def main():
     running = True
     state = State.MAIN_SCREEN
 
+    gemsAndUpgrades = GemsAndUpgrades()
+
     # Create screens
     mainScreen = MainScreen(display)
-    gameScreen = GameScreen(display)
-    shopScreen = ShopScreen(display)
+    gameScreen = GameScreen(display, gemsAndUpgrades)
+    shopScreen = ShopScreen(display, gemsAndUpgrades)
+
 
     # Game loop
     while running:
@@ -51,6 +55,7 @@ def main():
             gameScreen.update(deltaTime)
             gameScreen.draw()
         elif state == State.SHOP_SCREEN:
+            shopScreen.update()
             shopScreen.draw()
 
         pygame.display.update()

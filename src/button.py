@@ -28,6 +28,10 @@ class Button:
                 state = State.SHOP_SCREEN
             elif self.text.getText() == "Back":
                 state = State.GAME_SCREEN
+            
+            if self.text.getText() == "Upgrade 1":
+                print(self.text.getText())
+                return True
         
         return state
     
