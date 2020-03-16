@@ -44,9 +44,9 @@ class ShopScreen(Screen):
         elif self.upgradeButton2.isBeingClicked(state) == True:
             self.gemsAndUpgrades.upgradePassiveIncrementAmount()
         elif self.upgradeButton3.isBeingClicked(state) == True:
-            print("Button 3 Pressed")
+            print("Upgrade 3 Pressed")
         elif self.upgradeButton4.isBeingClicked(state) == True:
-            print("Button 4 Pressed")
+            print("Upgrade 4 Pressed")
         elif self.backButton.isBeingClicked(state) == True:
             state = State.GAME_SCREEN
 

@@ -23,5 +23,6 @@ class MainScreen(Screen):
         
         if self.quitButton.isBeingClicked(state) == True:
             print("Game should close now!")
+            raise SystemExit
 
         return state
