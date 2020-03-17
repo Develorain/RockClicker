@@ -64,5 +64,5 @@ if __name__ == '__main__':
 
 # TODO
 # add dying
-# add prices to shop
-# add last 2 upgrades
+# add more upgrades
+# general refactor required
