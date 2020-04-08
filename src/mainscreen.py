@@ -21,7 +21,7 @@ class MainScreen(Screen):
     # Create the components of the main screen
     def initComponents(self):
         # Labels
-        self.titleText = Text("Rock Clicker", 320, 150, constants.WHITE, "Arial", 30)
+        self.titleText = Text("Rock Clicker", 310, 150, constants.WHITE, "Arial-Bold", 50)
 
         # Buttons
         self.startButton = Button("Start", 360, 225, 100, 50)

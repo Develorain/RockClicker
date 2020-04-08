@@ -42,16 +42,15 @@ class GameOverScreen(Screen):
         self.finalGemText.update(str(self.profile.getGemCount()))
 
     def checkForComponentClicks(self):
-        if self.quitButton.isBeingClicked() == True:
-            print("Game should close now!")
-            raise SystemExit
-
-        # Determine which save file will be overwritten based on which quit is being pressed
+        # Determine which save file will be overwritten based on which quit button is being pressed
         if self.quitButton.x < constants.SCREEN_WIDTH:
             f = open(constants.PRIMARY_FILE_NAME, "w")
+            print("left quit: ")
+            print(self.quitButton.x)
         
-        if (self.saveButton.x > constants.SCREEN_WIDTH):
+        if (self.quitButton.x > constants.SCREEN_WIDTH):
             f = open(constants.SECONDARY_FILE_NAME, "w")
+            print("right quit")
         
         # Set the save file to default values, as the character is now dead!
         f.write(str(200) + " ")
@@ -59,3 +58,6 @@ class GameOverScreen(Screen):
         f.write(str(0) + " ")
         f.write(str(10) + " ")
         f.close()
+        
+        print("Game should close now!")
+        raise SystemExit

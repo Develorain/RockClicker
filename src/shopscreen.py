@@ -61,7 +61,7 @@ class ShopScreen(Screen):
         self.components.append(self.healthText)
 
     def update(self, deltaTime):
-        self.profile.handlePassive(deltaTime)
+        #self.profile.handlePassive(deltaTime)
 
         self.gemText.update(str(self.profile.getGemCount()))
         self.healthText.update(str(self.profile.health))
