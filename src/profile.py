@@ -1,22 +1,25 @@
 from state import State
 
 class Profile():
-    
-    def __init__(self):
-        # Upgrade 1
-        self.INCREMENT_AMOUNT = 1
-        self.UPGRADE_INCREMENT_COST = 100
-        self.INCREMENT_COUNT = 0
+    def __init__(self, gemCount, incrementCount, passiveCount, health):
+        self.gemCount = gemCount
+        self.health = health
 
-        # Upgrade 2
-        self.PASSIVE_AMOUNT = 1
-        self.UPGRADE_PASSIVE_COST = 50
-        self.PASSIVE_COUNT = 0
+        # Upgrade 1 stats
+        self.incrementCount = incrementCount # how many times this has been upgraded
+        self.incrementIncreasePerUpgrade = 5 # how much the gem/click goes up by per upgrade
+        self.incrementAmount = self.incrementCount * self.incrementIncreasePerUpgrade # how much gems go up per click
+        self.incrementUpgradeCost = 100 # cost of upgrade
+
+        # Upgrade 2 stats
+        self.passiveCount = passiveCount
+        self.passiveIncreasePerUpgrade = 1
+        self.passiveAmount = self.passiveCount * self.passiveIncreasePerUpgrade  # how much gems go up per second
+        self.passiveUpgradeCost = 50
         self.PASSIVE_TIMER = 1000  # 1 second per passive tick
-
-        self.gemCount = 100000
         self.passiveTimer = 0
 
+        # Profiles are created to start from the main menu
         self.state = State.MAIN_SCREEN
     
     def handlePassive(self, deltaTime):
@@ -27,30 +30,30 @@ class Profile():
             self.passiveIncrementGems()
 
     def incrementGems(self):
-        self.gemCount = self.gemCount + self.INCREMENT_AMOUNT
+        self.gemCount = self.gemCount + self.incrementAmount
     
     def passiveIncrementGems(self):
-        self.gemCount = self.gemCount + self.PASSIVE_AMOUNT
+        self.gemCount = self.gemCount + self.passiveAmount
     
     def upgradeIncrementAmount(self):
-        if self.UPGRADE_INCREMENT_COST <= self.gemCount:
-            self.INCREMENT_AMOUNT = self.INCREMENT_AMOUNT + 5
-            self.gemCount = self.gemCount - self.UPGRADE_INCREMENT_COST
-            self.INCREMENT_COUNT = self.INCREMENT_COUNT + 1
+        if self.incrementUpgradeCost <= self.gemCount:
+            self.incrementAmount = self.incrementAmount + self.incrementIncreasePerUpgrade
+            self.gemCount = self.gemCount - self.incrementUpgradeCost
+            self.incrementCount = self.incrementCount + 1
 
             print("New gem count:" + str(self.gemCount))
-            print("Upgraded to " + str(self.INCREMENT_AMOUNT) + " per click")
+            print("Upgraded to " + str(self.incrementAmount) + " per click")
         else:
             print("Can't afford upgrade")
     
     def upgradePassiveIncrementAmount(self):
-        if self.UPGRADE_PASSIVE_COST <= self.gemCount:
-            self.PASSIVE_AMOUNT = self.PASSIVE_AMOUNT + 1
-            self.gemCount = self.gemCount - self.UPGRADE_PASSIVE_COST
-            self.PASSIVE_COUNT = self.PASSIVE_COUNT + 1
+        if self.passiveUpgradeCost <= self.gemCount:
+            self.passiveAmount = self.passiveAmount + self.passiveIncreasePerUpgrade
+            self.gemCount = self.gemCount - self.passiveUpgradeCost
+            self.passiveCount = self.passiveCount + 1
 
             print("New gem count:" + str(self.gemCount))
-            print("Upgraded to " + str(self.PASSIVE_AMOUNT) + " per second")
+            print("Upgraded to " + str(self.passiveAmount) + " per second")
         else:
             print("Can't afford upgrade")
     
@@ -58,10 +61,10 @@ class Profile():
         return self.gemCount
     
     def getIncrementCount(self):
-        return self.INCREMENT_COUNT
+        return self.incrementCount
 
     def getPassiveCount(self):
-        return self.PASSIVE_COUNT
+        return self.passiveCount
 
     def isPassiveReady(self):
         if self.passiveTimer >= self.PASSIVE_TIMER:

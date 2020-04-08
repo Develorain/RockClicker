@@ -24,9 +24,9 @@ class MainScreen(Screen):
         self.titleText = Text("Rock Clicker", 320, 150, constants.WHITE, "Arial", 30)
 
         # Buttons
-        self.startButton = Button("Start", 350, 225, 100, 50)
-        self.detectButton = Button("Detect", 350, 300, 100, 50)
-        self.quitButton = Button("Quit", 350, 375, 100, 50)
+        self.startButton = Button("Start", 360, 225, 100, 50)
+        self.detectButton = Button("Detect", 360, 300, 100, 50)
+        self.quitButton = Button("Quit", 360, 375, 100, 50)
     
     # Attach the created components to the screen
     def attachComponents(self):
@@ -50,10 +50,9 @@ class MainScreen(Screen):
 
                 # Reposition components
                 for component in self.components:
-                    component.setX(component.getX() * 2)
+                    component.setX(component.getX() * 2 - component.width/2)
 
                 constants.MULTIPLAYER = True
-                print(constants.MULTIPLAYER)
         
         if self.quitButton.isBeingClicked() == True:
             print("Game should close now!")

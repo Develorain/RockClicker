@@ -6,7 +6,7 @@ from text import Text
 
 class Button:
     def __init__(self, text, x, y, width, height):
-        self.text = Text(text, x,  y, constants.BLACK, "Arial", 20)
+        self.text = Text(text, x,  y, constants.BLACK, "Arial", 20, True, width, height)
         self.x = x
         self.y = y
         self.width = width

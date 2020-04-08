@@ -21,26 +21,18 @@ class GameScreen(Screen):
     # Create the components of the game screen
     def initComponents(self):
         # Rocks
-        self.rock = Rock(self.x + constants.CENTER_SCREEN_X, constants.CENTER_SCREEN_Y, 100, 100)
+        self.rock = Rock(self.x + constants.CENTER_SCREEN_X, constants.CENTER_SCREEN_Y, self.profile.health * 10 + 50, self.profile.health * 10 + 50, self.profile)
 
         # Buttons
         self.saveButton = Button("Save", self.x + 700, 0, 100, 50)
         self.shopButton = Button("Shop", self.x + 700, 550, 100, 50)
 
         # Labels and Dynamic text
-        self.gemText = Text("Gem:", self.x + 10, 550, constants.WHITE, "Arial", 25)
-        self.gemAmountText = Text(str(self.profile.getGemCount()), self.x + 72, 550, constants.WHITE, "Arial", 25)
+        self.gemLabel = Text("Gem:", self.x + 10, 550, constants.WHITE, "Arial", 25)
+        self.gemText = Text(str(self.profile.getGemCount()), self.x + 72, 550, constants.WHITE, "Arial", 25)
 
-        # Rocks
-        #self.rock2 = Rock(constants.CENTER_SCREEN_X+constants.SCREEN_WIDTH, constants.CENTER_SCREEN_Y, 100, 100)
-
-        # Buttons
-        #self.saveButton2 = Button("Save", 700+constants.SCREEN_WIDTH, 0, 100, 50)
-        #self.shopButton2 = Button("Shop", 700+constants.SCREEN_WIDTH, 550, 100, 50)
-
-        # Labels and Dynamic text
-        #self.gemText2 = Text("Gem:", 10+constants.SCREEN_WIDTH, 550, constants.WHITE, "Arial", 25)
-        #self.gemAmountText2 = Text(str(self.profile.getGemCount()), 72+constants.SCREEN_WIDTH, 550, constants.WHITE, "Arial", 25)
+        self.healthLabel = Text("Health:", self.x + 340, 550, constants.WHITE, "Arial", 25)
+        self.healthText = Text(str(self.profile.health), self.x + 422, 550, constants.WHITE, "Arial", 25)
 
     # Add components to components list
     def attachComponents(self):
@@ -52,40 +44,36 @@ class GameScreen(Screen):
         self.components.append(self.shopButton)
         
         # Labels and Dynamic text
+        self.components.append(self.gemLabel)
         self.components.append(self.gemText)
-        self.components.append(self.gemAmountText)
 
-        # Rocks
-        #self.components.append(self.rock2)
-
-        # Buttons
-        #self.components.append(self.saveButton2)
-        #self.components.append(self.shopButton2)
-        
-        # Labels and Dynamic text
-        #self.components.append(self.gemText2)
-        #self.components.append(self.gemAmountText2)
+        self.components.append(self.healthLabel)
+        self.components.append(self.healthText)
     
     # Updates all the components in the screen that change
     def update(self, deltaTime):
         self.profile.handlePassive(deltaTime)
 
         self.rock.update(deltaTime)
-        self.gemAmountText.update(str(self.profile.getGemCount()))
-
-        #if (constants.MULTIPLAYER):
-            #self.rock2.update(deltaTime)
-            #self.gemAmountText2.update(str(self.profile.getGemCount()))
+        self.gemText.update(str(self.profile.getGemCount()))
+        self.healthText.update(str(self.rock.profile.health))
     
     def checkForComponentClicks(self):
         if self.rock.isBeingClicked() == True:
             self.profile.incrementGems()
         
         if self.saveButton.isBeingClicked() == True:
-            f = open(constants.PRIMARY_FILE_NAME, "w")
-            f.write(str(self.profile.getGemCount()) + "\n")
-            f.write(str(self.profile.getIncrementCount()) + "\n")
-            f.write(str(self.profile.getPassiveCount()))
+            # Determine which file will be overwritten based on which save is being pressed
+            if self.saveButton.x < constants.SCREEN_WIDTH:
+                f = open(constants.PRIMARY_FILE_NAME, "w")
+            
+            if (self.saveButton.x > constants.SCREEN_WIDTH):
+                f = open(constants.SECONDARY_FILE_NAME, "w")
+            
+            f.write(str(self.profile.getGemCount()) + " ")
+            f.write(str(self.profile.getIncrementCount()) + " ")
+            f.write(str(self.profile.getPassiveCount()) + " ")
+            f.write(str(self.profile.health) + " ")
             f.close()
         
         if self.shopButton.isBeingClicked() == True:
