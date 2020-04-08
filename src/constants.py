@@ -1,3 +1,5 @@
+from state import State
+
 # Global final constants available to all classes
 
 # Dimensions
@@ -11,3 +13,12 @@ CENTER_SCREEN_Y = SCREEN_HEIGHT / 2
 # Colours
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+
+# Flags
+MULTIPLAYER = False
+
+# Rock Properties
+
+# Files
+PRIMARY_FILE_NAME = "primary.txt"
+SECONDARY_FILE_NAME = "secondary.txt"

@@ -1,33 +1,33 @@
 import pygame
 import constants
 
-from rock import Rock
 from button import Button
 from text import Text
 from state import State
 from mainscreen import MainScreen
 from gamescreen import GameScreen
 from shopscreen import ShopScreen
-from gemsandupgrades import GemsAndUpgrades
+from profile import Profile
 
 def main():
-    global running, display, rock
-
     # Initialize pygame
     pygame.init()
-    display = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
     pygame.display.set_caption("Rock Clicker")
+    display = pygame.display.set_mode((constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT))
     clock = pygame.time.Clock()
-
     running = True
-    state = State.MAIN_SCREEN
 
-    gemsAndUpgrades = GemsAndUpgrades()
+    profile1 = Profile()
+    profile2 = Profile()
 
     # Create screens
-    mainScreen = MainScreen(display)
-    gameScreen = GameScreen(display, gemsAndUpgrades)
-    shopScreen = ShopScreen(display, gemsAndUpgrades)
+    mainScreen = MainScreen(display, profile1, profile2)
+
+    gameScreen1 = GameScreen(display, profile1, 0, 0)
+    shopScreen1 = ShopScreen(display, profile1, 0, 0)
+    
+    gameScreen2 = GameScreen(display, profile2, constants.SCREEN_WIDTH, 0)
+    shopScreen2 = ShopScreen(display, profile2, constants.SCREEN_WIDTH, 0)
 
     # Game loop
     while running:
@@ -35,12 +35,17 @@ def main():
 
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if state == State.MAIN_SCREEN:
-                    state = mainScreen.checkForComponentClicks(state)
-                elif state == State.GAME_SCREEN:
-                    state = gameScreen.checkForComponentClicks(state)
-                elif state == State.SHOP_SCREEN:
-                    state = shopScreen.checkForComponentClicks(state)
+                if profile1.state == State.MAIN_SCREEN:
+                    mainScreen.checkForComponentClicks()
+                elif profile1.state == State.GAME_SCREEN:
+                    gameScreen1.checkForComponentClicks()
+                elif profile1.state == State.SHOP_SCREEN:
+                    shopScreen1.checkForComponentClicks()
+
+                if profile2.state == State.GAME_SCREEN:
+                    gameScreen2.checkForComponentClicks()
+                elif profile2.state == State.SHOP_SCREEN:
+                    shopScreen2.checkForComponentClicks()
 
             if event.type == pygame.QUIT:
                 running = False
@@ -48,21 +53,25 @@ def main():
         # Clears display
         display.fill(constants.BLACK)
         
-        if state == State.MAIN_SCREEN:
+        if profile1.state == State.MAIN_SCREEN:
             mainScreen.draw()
-        elif state == State.GAME_SCREEN:
-            gameScreen.update(deltaTime)
-            gameScreen.draw()
-        elif state == State.SHOP_SCREEN:
-            shopScreen.update(deltaTime)
-            shopScreen.draw()
+        elif profile1.state == State.GAME_SCREEN:
+            gameScreen1.update(deltaTime)
+            gameScreen1.draw()
+        elif profile1.state == State.SHOP_SCREEN:
+            shopScreen1.update(deltaTime)
+            shopScreen1.draw()
+        
+        if profile2.state == State.GAME_SCREEN:
+            gameScreen2.update(deltaTime)
+            gameScreen2.draw()
+        elif profile2.state == State.SHOP_SCREEN:
+            shopScreen2.update(deltaTime)
+            shopScreen2.draw()
 
         pygame.display.update()
+        #print("State1: " + str(profile1.state))
+        #print("State2: " + str(profile2.state))
 
 if __name__ == '__main__':
     main()
-
-# TODO
-# add dying
-# add more upgrades
-# general refactor required

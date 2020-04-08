@@ -7,38 +7,86 @@ from screen import Screen
 from state import State
 
 class GameScreen(Screen):
-    def __init__(self, display, gemsAndUpgrades):
+    def __init__(self, display, profile, x, y):
         Screen.__init__(self, display)
 
         # Give screen access to gems and upgrades
-        self.gemsAndUpgrades = gemsAndUpgrades
+        self.profile = profile
+        self.x = x
+        self.y = y
 
-        self.init()
+        self.initComponents()
+        self.attachComponents()
     
-    def init(self):
-        # Create the components of the game screen
-        self.rock = Rock(constants.CENTER_SCREEN_X, constants.CENTER_SCREEN_Y, 100, 100)
-        self.shopButton = Button("Shop", 700, 550, 100, 50)
-        self.gemLabel = Text("Gem:", 10, 550, constants.WHITE, "Arial", 30)
-        self.gemText = Text(str(self.gemsAndUpgrades.getGemCount()), 90, 550, constants.WHITE, "Arial", 30)
+    # Create the components of the game screen
+    def initComponents(self):
+        # Rocks
+        self.rock = Rock(self.x + constants.CENTER_SCREEN_X, constants.CENTER_SCREEN_Y, 100, 100)
 
-        # Add components to components list
+        # Buttons
+        self.saveButton = Button("Save", self.x + 700, 0, 100, 50)
+        self.shopButton = Button("Shop", self.x + 700, 550, 100, 50)
+
+        # Labels and Dynamic text
+        self.gemText = Text("Gem:", self.x + 10, 550, constants.WHITE, "Arial", 25)
+        self.gemAmountText = Text(str(self.profile.getGemCount()), self.x + 72, 550, constants.WHITE, "Arial", 25)
+
+        # Rocks
+        #self.rock2 = Rock(constants.CENTER_SCREEN_X+constants.SCREEN_WIDTH, constants.CENTER_SCREEN_Y, 100, 100)
+
+        # Buttons
+        #self.saveButton2 = Button("Save", 700+constants.SCREEN_WIDTH, 0, 100, 50)
+        #self.shopButton2 = Button("Shop", 700+constants.SCREEN_WIDTH, 550, 100, 50)
+
+        # Labels and Dynamic text
+        #self.gemText2 = Text("Gem:", 10+constants.SCREEN_WIDTH, 550, constants.WHITE, "Arial", 25)
+        #self.gemAmountText2 = Text(str(self.profile.getGemCount()), 72+constants.SCREEN_WIDTH, 550, constants.WHITE, "Arial", 25)
+
+    # Add components to components list
+    def attachComponents(self):
+        # Rocks
         self.components.append(self.rock)
+
+        # Buttons
+        self.components.append(self.saveButton)
         self.components.append(self.shopButton)
-        self.components.append(self.gemLabel)
+        
+        # Labels and Dynamic text
         self.components.append(self.gemText)
+        self.components.append(self.gemAmountText)
+
+        # Rocks
+        #self.components.append(self.rock2)
+
+        # Buttons
+        #self.components.append(self.saveButton2)
+        #self.components.append(self.shopButton2)
+        
+        # Labels and Dynamic text
+        #self.components.append(self.gemText2)
+        #self.components.append(self.gemAmountText2)
     
+    # Updates all the components in the screen that change
     def update(self, deltaTime):
-        self.gemsAndUpgrades.handlePassive(deltaTime)
+        self.profile.handlePassive(deltaTime)
 
         self.rock.update(deltaTime)
-        self.gemText.update(str(self.gemsAndUpgrades.getGemCount()))
-    
-    def checkForComponentClicks(self, state):
-        if self.rock.isBeingClicked() == True:
-            self.gemsAndUpgrades.incrementGems()
-        
-        if self.shopButton.isBeingClicked(state) == True:
-            state = State.SHOP_SCREEN
+        self.gemAmountText.update(str(self.profile.getGemCount()))
 
-        return state
+        #if (constants.MULTIPLAYER):
+            #self.rock2.update(deltaTime)
+            #self.gemAmountText2.update(str(self.profile.getGemCount()))
+    
+    def checkForComponentClicks(self):
+        if self.rock.isBeingClicked() == True:
+            self.profile.incrementGems()
+        
+        if self.saveButton.isBeingClicked() == True:
+            f = open(constants.PRIMARY_FILE_NAME, "w")
+            f.write(str(self.profile.getGemCount()) + "\n")
+            f.write(str(self.profile.getIncrementCount()) + "\n")
+            f.write(str(self.profile.getPassiveCount()))
+            f.close()
+        
+        if self.shopButton.isBeingClicked() == True:
+            self.profile.state = State.SHOP_SCREEN

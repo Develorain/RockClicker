@@ -1,18 +1,23 @@
-class GemsAndUpgrades():
-    # UPGRADE 1
-    INCREMENT_AMOUNT = 1
-    UPGRADE_INCREMENT_COST = 100
-    INCREMENT_COUNT = 0
+from state import State
 
-    # UPGRADE 2
-    PASSIVE_AMOUNT = 1
-    UPGRADE_PASSIVE_COST = 50
-    PASSIVE_COUNT = 0
-    PASSIVE_TIMER = 1000  # 1 second per passive tick
+class Profile():
     
     def __init__(self):
+        # Upgrade 1
+        self.INCREMENT_AMOUNT = 1
+        self.UPGRADE_INCREMENT_COST = 100
+        self.INCREMENT_COUNT = 0
+
+        # Upgrade 2
+        self.PASSIVE_AMOUNT = 1
+        self.UPGRADE_PASSIVE_COST = 50
+        self.PASSIVE_COUNT = 0
+        self.PASSIVE_TIMER = 1000  # 1 second per passive tick
+
         self.gemCount = 100000
         self.passiveTimer = 0
+
+        self.state = State.MAIN_SCREEN
     
     def handlePassive(self, deltaTime):
         self.addToPassiveTimer(deltaTime)

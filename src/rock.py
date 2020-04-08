@@ -37,7 +37,7 @@ class Rock:
             self.height = self.height - self.SHRINK_AMOUNT
 
     def draw(self, screen):
-        pygame.draw.rect(screen, constants.WHITE, (constants.CENTER_SCREEN_X - (self.width / 2), constants.CENTER_SCREEN_Y - (self.height / 2), self.width, self.height))
+        pygame.draw.rect(screen, constants.WHITE, (self.x - (self.width / 2), self.y - (self.height / 2), self.width, self.height))
 
     def isBeingClicked(self):
         mouse = pygame.mouse.get_pos()
@@ -60,6 +60,9 @@ class Rock:
     def getX(self):
         return self.x
     
+    def setX(self, x):
+        self.x = x
+    
     def getY(self):
         return self.y
 
@@ -68,3 +71,4 @@ class Rock:
     
     def getHeight(self):
         return self.height
+    

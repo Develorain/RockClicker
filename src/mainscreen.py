@@ -1,28 +1,60 @@
+import constants
+import pygame
+import os.path
+
+from os import path
 from button import Button
 from screen import Screen
 from state import State
+from text import Text
 
 class MainScreen(Screen):
-    def __init__(self, display):
+    def __init__(self, display, profile1, profile2):
         Screen.__init__(self, display)
+        
+        self.profile1 = profile1
+        self.profile2 = profile2
 
-        self.init()
+        self.initComponents()
+        self.attachComponents()
     
-    def init(self):
-        # Create the components of the main screen
-        self.startButton = Button("Start", 350, 225, 100, 50)
-        self.quitButton = Button("Quit", 350, 300, 100, 50)
+    # Create the components of the main screen
+    def initComponents(self):
+        # Labels
+        self.titleText = Text("Rock Clicker", 320, 150, constants.WHITE, "Arial", 30)
 
-        # Add components to components list
+        # Buttons
+        self.startButton = Button("Start", 350, 225, 100, 50)
+        self.detectButton = Button("Detect", 350, 300, 100, 50)
+        self.quitButton = Button("Quit", 350, 375, 100, 50)
+    
+    # Attach the created components to the screen
+    def attachComponents(self):
+        # Labels
+        self.components.append(self.titleText)
+
+        # Buttons
         self.components.append(self.startButton)
+        self.components.append(self.detectButton)
         self.components.append(self.quitButton)
     
-    def checkForComponentClicks(self, state):
-        if self.startButton.isBeingClicked(state) == True:
-            state = State.GAME_SCREEN
+    def checkForComponentClicks(self):
+        if self.startButton.isBeingClicked() == True:
+            self.profile1.state = State.GAME_SCREEN
+            self.profile2.state = State.GAME_SCREEN
+
+        if self.detectButton.isBeingClicked() == True:
+            if path.exists(constants.SECONDARY_FILE_NAME) and constants.MULTIPLAYER == False:
+                # Increase screen size
+                display = pygame.display.set_mode((constants.SCREEN_WIDTH * 2, constants.SCREEN_HEIGHT))
+
+                # Reposition components
+                for component in self.components:
+                    component.setX(component.getX() * 2)
+
+                constants.MULTIPLAYER = True
+                print(constants.MULTIPLAYER)
         
-        if self.quitButton.isBeingClicked(state) == True:
+        if self.quitButton.isBeingClicked() == True:
             print("Game should close now!")
             raise SystemExit
-
-        return state

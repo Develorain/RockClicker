@@ -16,13 +16,13 @@ class Button:
         pygame.draw.rect(display, constants.WHITE, (self.x, self.y, self.width, self.height))
         self.text.draw(display)
     
-    def isBeingClicked(self, state):
+    def isBeingClicked(self):
         mouse = pygame.mouse.get_pos()
         
         if self.isClickInTheButton(mouse[0], mouse[1]):
             return True
         
-        return state
+        return False
     
     def isClickInTheButton(self, mouseX, mouseY):
         if self.x < mouseX < self.x + self.width:
@@ -30,3 +30,13 @@ class Button:
                 return True
         
         return False
+    
+    def getX(self):
+        return self.x
+    
+    def setX(self, x):
+        # Set button x
+        self.x = x
+
+        # Set text x
+        self.text.setX(self.x)

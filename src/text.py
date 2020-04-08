@@ -21,3 +21,9 @@ class Text:
     
     def getText(self):
         return self.text
+    
+    def getX(self):
+        return self.x
+
+    def setX(self, x):
+        self.x = x

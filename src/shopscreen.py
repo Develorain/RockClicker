@@ -6,40 +6,48 @@ from screen import Screen
 from state import State
 
 class ShopScreen(Screen):
-    def __init__(self, display, gemsAndUpgrades):
+    def __init__(self, display, profile, x, y):
         Screen.__init__(self, display)
         
         # Give screen access to gems and upgrades
-        self.gemsAndUpgrades = gemsAndUpgrades
+        self.profile = profile
 
-        self.init()
+        self.x = x
+        self.y = y
+
+        self.initComponents()
+        self.attachComponents()
     
-    def init(self):
-        # Create the components of the main screen
-        self.upgradeButton1 = Button("Upgrade Increment Amount: Cost 100", 150, 150, 500, 50)
-        self.upgradeButton2 = Button("Upgrade Passive Increment Amount: Cost 50", 150, 225, 500, 50)
-        self.upgradeButton3 = Button("Upgrade 3", 150, 300, 500, 50)
-        self.upgradeButton4 = Button("Upgrade 4", 150, 375, 500, 50)
-        self.backButton = Button("Back", 700, 550, 100, 50)
+    # Create the components of the main screen
+    def initComponents(self):
+        # Buttons
+        self.upgradeButton1 = Button("Increment Amount (Cost 100)", self.x + 150, 150, 500, 50)
+        self.upgradeButton2 = Button("Passive Increment Amount (Cost 50)", self.x + 150, 225, 500, 50)
+        self.backButton = Button("Back", self.x +700, 550, 100, 50)
 
-        # Labels
-        self.upgrade1Label = Text("Increment Amount:", 10, 450, constants.WHITE, "Arial", 30)
-        self.upgrade1Text = Text(str(self.gemsAndUpgrades.getIncrementCount()), 265, 450, constants.WHITE, "Arial", 30)
+        # Labels and Dynamic text
+        self.availableUpgradesText = Text("Available Upgrades", self.x + 300, 100, constants.WHITE, "Arial", 30)
+        self.currentUpgradesText = Text("Current Upgrades", self.x + 300, 300, constants.WHITE, "Arial", 30)
 
-        self.upgrade2Label = Text("Passive Increment Amount:", 10, 500, constants.WHITE, "Arial", 30)
-        self.upgrade2Text = Text(str(self.gemsAndUpgrades.getPassiveCount()), 375, 500, constants.WHITE, "Arial", 30)
+        self.upgrade1Label = Text("Increment Level:", self.x + 200, 350, constants.WHITE, "Arial", 25)
+        self.upgrade1Text = Text(str(self.profile.getIncrementCount()), self.x + 388, 350, constants.WHITE, "Arial", 25)
 
-        self.gemLabel = Text("Gem:", 10, 550, constants.WHITE, "Arial", 30)
-        self.gemText = Text(str(self.gemsAndUpgrades.getGemCount()), 90, 550, constants.WHITE, "Arial", 30)
+        self.upgrade2Label = Text("Passive Increment Level:", self.x + 200, 400, constants.WHITE, "Arial", 25)
+        self.upgrade2Text = Text(str(self.profile.getPassiveCount()), self.x + 485, 400, constants.WHITE, "Arial", 25)
 
-        # Add components to components list
+        self.gemLabel = Text("Gem:", self.x + 10, 550, constants.WHITE, "Arial", 25)
+        self.gemText = Text(str(self.profile.getGemCount()), self.x + 72, 550, constants.WHITE, "Arial", 25)
+    
+    # Add components to components list
+    def attachComponents(self):
+        # Buttons
         self.components.append(self.upgradeButton1)
         self.components.append(self.upgradeButton2)
-        self.components.append(self.upgradeButton3)
-        self.components.append(self.upgradeButton4)
         self.components.append(self.backButton)
 
-
+        # Labels and dynamic text
+        self.components.append(self.availableUpgradesText)
+        self.components.append(self.currentUpgradesText)
         self.components.append(self.upgrade1Label)
         self.components.append(self.upgrade1Text)
         self.components.append(self.upgrade2Label)
@@ -48,22 +56,16 @@ class ShopScreen(Screen):
         self.components.append(self.gemText)
 
     def update(self, deltaTime):
-        self.gemsAndUpgrades.handlePassive(deltaTime)
+        self.profile.handlePassive(deltaTime)
 
-        self.gemText.update(str(self.gemsAndUpgrades.getGemCount()))
-        self.upgrade1Text.update(str(self.gemsAndUpgrades.getIncrementCount()))
-        self.upgrade2Text.update(str(self.gemsAndUpgrades.getPassiveCount()))
+        self.gemText.update(str(self.profile.getGemCount()))
+        self.upgrade1Text.update(str(self.profile.getIncrementCount()))
+        self.upgrade2Text.update(str(self.profile.getPassiveCount()))
     
-    def checkForComponentClicks(self, state):
-        if self.upgradeButton1.isBeingClicked(state) == True:
-            self.gemsAndUpgrades.upgradeIncrementAmount()
-        elif self.upgradeButton2.isBeingClicked(state) == True:
-            self.gemsAndUpgrades.upgradePassiveIncrementAmount()
-        elif self.upgradeButton3.isBeingClicked(state) == True:
-            print("Upgrade 3 Pressed")
-        elif self.upgradeButton4.isBeingClicked(state) == True:
-            print("Upgrade 4 Pressed")
-        elif self.backButton.isBeingClicked(state) == True:
-            state = State.GAME_SCREEN
-
-        return state
+    def checkForComponentClicks(self):
+        if self.upgradeButton1.isBeingClicked() == True:
+            self.profile.upgradeIncrementAmount()
+        elif self.upgradeButton2.isBeingClicked() == True:
+            self.profile.upgradePassiveIncrementAmount()
+        elif self.backButton.isBeingClicked() == True:
+            self.profile.state = State.GAME_SCREEN
